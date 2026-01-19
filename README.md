@@ -4,4 +4,5 @@ how to play:
 use WASD/arrow/controller to move  
 use left mouse/ space bar/ right trigger to shoot  
 pause the game with P and unpause with U  
+press Enter to start game and Q to quit
 

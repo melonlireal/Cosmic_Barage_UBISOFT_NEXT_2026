@@ -28,6 +28,9 @@ void UI::render_help(){
     App::Print(10.0f, APP_VIRTUAL_HEIGHT - 100.0f, "P to Pause / U to Unpause", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
     App::Print(10.0f, APP_VIRTUAL_HEIGHT - 120.0f, "R to Restart after Game Over", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
     App::Print(10.0f, APP_VIRTUAL_HEIGHT - 140.0f, "B to go back to Main Menu after Game Over", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
+    App::Print(10.0f, APP_VIRTUAL_HEIGHT - 160.0f, "Press Enter to start the game", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
+    App::Print(10.0f, APP_VIRTUAL_HEIGHT - 180.0f, "Press Q to quit", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
+    App::Print(10.0f, APP_VIRTUAL_HEIGHT - 200.0f, "Have Fun!", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
 }
 
 void UI::render_start_scene(){

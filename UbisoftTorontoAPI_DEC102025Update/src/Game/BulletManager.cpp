@@ -28,6 +28,8 @@
         }
     }
 
+
+    /*
     // this is for traceable bullets that follow a target
     void BulletManager::update_bullets(Position target_pos) {
         for (auto& bullet : *bullets) {
@@ -35,6 +37,7 @@
             bullet->bullet_update_position();
         }
     }
+    */
 
     void BulletManager::render_and_clear_bullets() {
 

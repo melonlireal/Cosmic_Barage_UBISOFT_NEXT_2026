@@ -37,7 +37,7 @@ class Player{
 
         //void player_get_health(int &hp);
 
-        void player_take_damage(int dmg);
+        void player_take_damage(int dmg); // reduce player's health by dmg amount
 
         void player_render(); // render player sprite and its bullets
 

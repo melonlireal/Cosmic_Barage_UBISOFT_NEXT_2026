@@ -4,6 +4,7 @@
 #include "../ContestAPI/SimpleSprite.h"
 
 // bullet entity shot by player or enemies
+// bullet will automatically rotate its sprite to face its direction of travel
 
 class Bullet{
     public:
@@ -14,23 +15,18 @@ class Bullet{
 
         ~Bullet();
 
-        // update the bullets position based on its direction and speed
-        void bullet_update_position();
+        void bullet_update_position(); // update the bullets position based on its direction and speed
 
-        // set the bullet's direction towards a target position
         void bullet_set_direction(float target_x, float target_y);
+        // set the bullet's direction towards a target position
 
-        // set the bullet's position
-        void bullet_set_position(float x, float y);
+        void bullet_set_position(float x, float y); // set the bullet's position
 
-        // get the bullet's position
-        void bullet_get_position(float &x, float &y);
+        void bullet_get_position(float &x, float &y); // get the bullet's position
 
-        // get the bullet's speed
-        float bullet_get_speed(); 
+        float bullet_get_speed();  // get the bullet's speed
 
-        // set the bullet's speed
-        void bullet_set_speed(float s);
+        void bullet_set_speed(float s); // set the bullet's speed
 
 };
 

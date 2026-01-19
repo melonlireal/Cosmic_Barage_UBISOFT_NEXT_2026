@@ -3,6 +3,9 @@
 
 #include "Enemy.h"
 
+//splattter quickly moves down to the top of screen then starts shooting bullet in all directions
+// they are a huge threat if not dealt with quickly
+
 class EnemySplatter : public Enemy {
 public:
     EnemySplatter(Position pos, float hp, float spe,

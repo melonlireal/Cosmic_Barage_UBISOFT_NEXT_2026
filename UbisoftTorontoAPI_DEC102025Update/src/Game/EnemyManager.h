@@ -11,6 +11,8 @@
 //#include <random>
 
 typedef std::vector<Enemy*> EnemyList;
+
+// manager that handles all enemies in the game 
 class EnemyManager {
 public:
     EnemyList* enemies;

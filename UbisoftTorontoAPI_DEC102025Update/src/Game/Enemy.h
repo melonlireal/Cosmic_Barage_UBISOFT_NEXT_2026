@@ -4,6 +4,7 @@
 #include "../ContestAPI/SimpleSprite.h"
 #include "GameManager.h"
 #include "Timer.h"
+
 // enemy entity that attacks the player
 
 class Enemy{
@@ -29,20 +30,19 @@ class Enemy{
         // move the enemy by dx and dy
         void enemy_update(float deltaTime); // update enemy's animation
         
-        virtual void enemy_move();
+        virtual void enemy_move(); // move enemy towards its target direction
 
-        virtual void enemy_shoot(Position target_pos);
+        virtual void enemy_shoot(Position target_pos); // let enemy shoot towards target position
                 
-        void enemy_take_damage(float dmg);
+        void enemy_take_damage(float dmg); // reduce enemy's health by dmg amount
 
         void enemy_get_position(float &x, float &y);
 
-        // useful for teleporting enemy
-        void enemy_set_position(float x, float y);
+        void enemy_set_position(float x, float y); // useful for teleporting enemy
 
-        void enemy_render();
+        void enemy_render(); // render enemy sprite
 
-        bool enemy_hit_player(Position player_pos, float radius);
+        bool enemy_hit_player(Position player_pos, float radius); // check if enemy hits player by it self
 
 
 };

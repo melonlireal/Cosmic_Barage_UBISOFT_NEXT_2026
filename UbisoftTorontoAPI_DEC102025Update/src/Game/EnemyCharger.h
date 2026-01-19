@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 
+// charger charge down the screen and launches rocket from both sides
 class EnemyCharger : public Enemy {
 public:
     EnemyCharger(Position pos, float hp, float spe,

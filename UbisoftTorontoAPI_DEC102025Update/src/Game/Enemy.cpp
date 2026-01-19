@@ -78,7 +78,6 @@ void Enemy::enemy_set_position(float x, float y){
 }
 
 void Enemy::enemy_render(){
-    enemy_bullet_manager->render_and_clear_bullets();
     sprite->Draw();
 }
 

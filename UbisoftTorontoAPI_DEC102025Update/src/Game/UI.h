@@ -10,6 +10,8 @@ enum game_state{
     GAME_OVER = 2
 };
 
+// UI manager that handles rendering game ui elements based on game state
+
 class UI{
     public:
         game_state game_current_state;

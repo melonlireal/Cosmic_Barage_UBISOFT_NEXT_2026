@@ -8,15 +8,17 @@
 class Timer{
     public:
         Timer(float duration);
-        // time duration for the timer, measured in seconds
-        float time_duration;
-        // current time this timer has last
-        float curr_time;
-        // set true when timer has started
-        bool started;
-        // return 1 if the timer has finished i.e reached its duration, else return 0
-        void timer_increment_time(bool* time_up);
-        void timer_start();
-        void timer_end();
+
+        float time_duration; // time duration for the timer, measured in seconds
+
+        float curr_time; // current time this timer has last
+
+        bool started; // set true when timer has started
+
+        void timer_increment_time(bool* time_up); // return 1 if the timer has finished i.e reached its duration, else return 0
+
+        void timer_start(); // start the timer
+        
+        void timer_end(); // end the timer
 };
 #endif

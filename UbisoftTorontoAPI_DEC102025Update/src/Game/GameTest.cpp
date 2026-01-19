@@ -53,16 +53,14 @@ void Init()
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	Game_Manager_Initialize();
-	game_ui = new UI();
 
+	game_ui = new UI();
 	background = App::CreateSprite("./data/TestData/art/background.png", 1, 1);
 	background->SetPosition(APP_VIRTUAL_WIDTH/2.f, APP_VIRTUAL_HEIGHT/2.f); // center the background
 	background->SetScale(1.5f);
 
 	enemy_manager = new EnemyManager();
-
 	spawn_timer = new Timer(0.5f);
-	//spawn_timer->timer_start();
 	
 	App::PlayAudio("./data/TestData//music/bgm.wav", true);
 	//------------------------------------------------------------------------
@@ -74,7 +72,13 @@ void Init()
 //------------------------------------------------------------------------
 void Update(const float deltaTime)
 {
-	show_help = false;
+	show_help = false; 
+
+	if (App::IsKeyPressed(App::KEY_H)) {
+		show_help = true;
+	}
+	//once player stop pressing H, help menu disappear
+
 	if (!pause && App::IsKeyPressed(App::KEY_P) && game_ui->game_current_state == PLAYING) {
 		App::PlayAudio("./data/TestData//music/UI.wav", false); 
 		pause = true;
@@ -84,19 +88,17 @@ void Update(const float deltaTime)
 		App::PlayAudio("./data/TestData//music/UI.wav", false); 
 		pause = false;
 	}
+	// pause and unpase game
 
-	if (App::IsKeyPressed(App::KEY_H)) {
-		show_help = true;
-	}
-
-	if (pause || shutting){return;}
+	if (pause || shutting){return;} // dont update anything when game paused
 
 	if (player_entity->health <= 0 && playing){
 		// check if gameover
 		game_ui->switch_game_state(GAME_OVER);
 		playing = false;
 		spawn_timer->timer_end();
-		player_entity->player_set_position(0, -200.0f); // move player offscreen
+		player_entity->player_set_position(0, -200.0f); 
+		// move player offscreen when game over
 	}
 
 	spawn_timer->timer_increment_time(&spawn);
@@ -148,7 +150,9 @@ void Update(const float deltaTime)
 	{
 		//||App::GetController().CheckButton(App::BTN_A)
 		// cuz it appears this button also triggers enter key
-		App::PlayAudio("./data/TestData//music/UI.wav", false);
+		if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
+			App::PlayAudio("./data/TestData//music/UI.wav", false);
+		}
 		if (!playing && game_ui->game_current_state == START_SCENE){
 		game_ui->switch_game_state(PLAYING);
 		playing = true;
@@ -162,7 +166,9 @@ void Update(const float deltaTime)
 	{
 		if (!playing && game_ui->game_current_state == GAME_OVER){
 
-			App::PlayAudio("./data/TestData//music/UI.wav", false);
+			if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
+				App::PlayAudio("./data/TestData//music/UI.wav", false);
+			}
 			enemy_bullet_manager->clear_all_bullets();
 			player_bullet_manager->clear_all_bullets();
 			enemy_manager->clear_all_enemies();
@@ -178,7 +184,9 @@ void Update(const float deltaTime)
 
 	if (App::IsKeyPressed(App::KEY_B) || App::GetController().CheckButton(App::BTN_B)){
 		if (!playing && game_ui->game_current_state == GAME_OVER){
-			App::PlayAudio("./data/TestData//music/UI.wav", false);
+			if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
+				App::PlayAudio("./data/TestData//music/UI.wav", false);
+			}
 			enemy_bullet_manager->clear_all_bullets();
 			player_bullet_manager->clear_all_bullets();
 			enemy_manager->clear_all_enemies();
@@ -199,6 +207,7 @@ void Update(const float deltaTime)
 	}
 
 
+	// check for collisions
 	float enemy_x, enemy_y;
 	for (Enemy* enemy : *(enemy_manager->enemies)) {
 		enemy->enemy_get_position(enemy_x, enemy_y);
@@ -210,6 +219,7 @@ void Update(const float deltaTime)
 			}
 		}
 	}
+	// collision between player bullets and enemies
 
 	float player_x, player_y;
 	player_entity->player_get_position(player_x, player_y);
@@ -220,6 +230,7 @@ void Update(const float deltaTime)
 			App::PlayAudio("./data/TestData//music/player_hurt.wav", false);
 		}
 	}
+	// collision between enemy bullets and player
 
 	if (enemy_manager->check_enemy_player_collisions(player_entity)) {
 		player_entity->player_take_damage(2.0f);
@@ -227,6 +238,12 @@ void Update(const float deltaTime)
 			App::PlayAudio("./data/TestData//music/player_hurt.wav", false);
 		}
 	}
+	//collision between enemies and player
+	// these checkers can be greately improved if use screen is devided to difference sectors 
+	// and only collision in the same sector is checked
+	// it can be done by making bullet manager and enemy manager 
+	// store bullet and enemy in a map rather than vector
+	// however I run out of time to implement this optimization
 
 }
 
@@ -239,24 +256,27 @@ void Render()
 {
 	if (shutting){
 		return;
+		// prevent race condition during shutdown
 	}
-	// draw background first
 	background->Draw();
+	// draw background first
 		
 	player_entity->player_render();
+	enemy_manager->render_and_clear_enemies();
+	// draw player and enemies
 
-	// render all enemy bullets
+
 	player_bullet_manager->render_and_clear_bullets();
 	enemy_bullet_manager->render_and_clear_bullets();
-	enemy_manager->render_and_clear_enemies();
+	// draw bullets
+
+
 	game_ui->render_game_ui(player_entity->health, pause);
-
 	App::Print(10.0f, APP_VIRTUAL_HEIGHT - 20.0F, "Press H for Help", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_TIMES_ROMAN_24);
-
 	if (show_help){
 		game_ui->render_help();
 	}
-
+	// draw UI and help menu
 
 	for (int i = 0; i < APP_VIRTUAL_HEIGHT; i += 3.5)
 	{
@@ -265,6 +285,7 @@ void Render()
 	}
 	// a layer of simple arcade effect
 }
+
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
 // Just before the app exits.
@@ -282,9 +303,5 @@ void Shutdown()
 	delete player_bullet_manager;
 	delete enemy_bullet_manager;
 	delete enemy_manager;
-	
-	//------------------------------------------------------------------------
-	// Example Sprite Code....
 	return;
-	//------------------------------------------------------------------------
 }

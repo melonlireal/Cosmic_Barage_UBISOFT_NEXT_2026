@@ -21,15 +21,16 @@ class BulletManager{
     void manager_add_bullets(Position shooter_pos, Direction direction, \
         std::string bullet_sprite_path, float sprite_scale, float bullet_speed);
 
-    void update_bullets();
+    void update_bullets(); // update all bullets' positions
 
-    void update_bullets(Position target_pos);
+    //void update_bullets(Position target_pos);
 
-    void render_and_clear_bullets();
+    void render_and_clear_bullets(); // render all bullets and clear those out of bounds
 
-    bool check_bullet_collisions(Position target_pos, float radius);
+    bool check_bullet_collisions(Position target_pos, float radius); 
+    // check if any bullet hits the target position with given radius
 
-    void clear_all_bullets();
+    void clear_all_bullets(); // clear all bullets in the manager
 
 
 };

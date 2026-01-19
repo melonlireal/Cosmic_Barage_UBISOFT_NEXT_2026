@@ -68,7 +68,10 @@ void Player::player_move(float dx, float dy){
     sprite->GetPosition(x, y);
     x += dx * speed;
     y += dy * speed;
-    sprite->SetPosition(x, y);
+    if (x >= -20.0f && x <= APP_VIRTUAL_WIDTH + 20.0f && y >=-20.0f && y <= APP_VIRTUAL_HEIGHT + 20.0f){
+        // only move when within bounds
+        sprite->SetPosition(x, y);
+    }
 }
 
 

@@ -150,14 +150,12 @@ void Update(const float deltaTime)
 	{
 		//||App::GetController().CheckButton(App::BTN_A)
 		// cuz it appears this button also triggers enter key
-		if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
-			App::PlayAudio("./data/TestData//music/UI.wav", false);
-		}
 		if (!playing && game_ui->game_current_state == START_SCENE){
-		game_ui->switch_game_state(PLAYING);
-		playing = true;
-		player_entity->player_set_position(APP_VIRTUAL_WIDTH/2.f, APP_VIRTUAL_HEIGHT/4.f);
-		spawn_timer->timer_start();
+			App::PlayAudio("./data/TestData//music/UI.wav", false);
+			game_ui->switch_game_state(PLAYING);
+			playing = true;
+			player_entity->player_set_position(APP_VIRTUAL_WIDTH/2.f, APP_VIRTUAL_HEIGHT/4.f);
+			spawn_timer->timer_start();
 		}
 
 	}
@@ -166,13 +164,10 @@ void Update(const float deltaTime)
 	{
 		if (!playing && game_ui->game_current_state == GAME_OVER){
 
-			if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
-				App::PlayAudio("./data/TestData//music/UI.wav", false);
-			}
+			App::PlayAudio("./data/TestData//music/UI.wav", false);
 			enemy_bullet_manager->clear_all_bullets();
 			player_bullet_manager->clear_all_bullets();
 			enemy_manager->clear_all_enemies();
-
 			game_ui->switch_game_state(PLAYING);
 			player_entity->health = 5;
 			score = 0;
@@ -184,9 +179,7 @@ void Update(const float deltaTime)
 
 	if (App::IsKeyPressed(App::KEY_B) || App::GetController().CheckButton(App::BTN_B)){
 		if (!playing && game_ui->game_current_state == GAME_OVER){
-			if (!App::IsSoundPlaying("./data/TestData//music/UI.wav")){
-				App::PlayAudio("./data/TestData//music/UI.wav", false);
-			}
+			App::PlayAudio("./data/TestData//music/UI.wav", false);
 			enemy_bullet_manager->clear_all_bullets();
 			player_bullet_manager->clear_all_bullets();
 			enemy_manager->clear_all_enemies();
